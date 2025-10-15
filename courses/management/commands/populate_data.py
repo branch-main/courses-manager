@@ -3,82 +3,93 @@ from courses.models import Teacher, Course
 
 
 class Command(BaseCommand):
-    help = 'Populate database with sample teachers and courses'
+    help = 'Poblar la base de datos con profesores y cursos de ejemplo'
 
     def handle(self, *args, **kwargs):
-        self.stdout.write('Creating sample data...')
+        self.stdout.write('Creando datos de ejemplo...')
 
-        # Create teachers
+        # Eliminar datos existentes
+        Course.objects.all().delete()
+        Teacher.objects.all().delete()
+        self.stdout.write('Datos anteriores eliminados')
+
+        # Crear profesores
         teachers_data = [
-            {'name': 'Dr. John Smith', 'speciality': 'Computer Science'},
-            {'name': 'Prof. Maria Garcia', 'speciality': 'Mathematics'},
-            {'name': 'Dr. David Chen', 'speciality': 'Physics'},
-            {'name': 'Prof. Sarah Johnson', 'speciality': 'Web Development'},
-            {'name': 'Dr. Michael Brown', 'speciality': 'Data Science'},
+            {'name': 'Dr. Juan Pérez', 'speciality': 'Ciencias de la Computación'},
+            {'name': 'Prof. María García', 'speciality': 'Matemáticas'},
+            {'name': 'Dr. David Chen', 'speciality': 'Física'},
+            {'name': 'Prof. Ana Martínez', 'speciality': 'Desarrollo Web'},
+            {'name': 'Dr. Carlos Rodríguez', 'speciality': 'Ciencia de Datos'},
         ]
 
         teachers = []
         for teacher_data in teachers_data:
-            teacher, created = Teacher.objects.get_or_create(**teacher_data)
+            teacher = Teacher.objects.create(**teacher_data)
             teachers.append(teacher)
-            if created:
-                self.stdout.write(self.style.SUCCESS(f'Created teacher: {teacher.name}'))
+            self.stdout.write(self.style.SUCCESS(f'Profesor creado: {teacher.name}'))
 
-        # Create courses
+        # Crear cursos
         courses_data = [
             {
-                'name': 'Introduction to Python Programming',
-                'description': 'Learn the fundamentals of Python programming including variables, data types, control structures, functions, and object-oriented programming. Perfect for beginners!',
+                'name': 'Introducción a la Programación en Python',
+                'description': 'Aprende los fundamentos de la programación en Python incluyendo variables, tipos de datos, estructuras de control, funciones y programación orientada a objetos. ¡Perfecto para principiantes!',
                 'teacher': teachers[0]
             },
             {
-                'name': 'Advanced Django Web Development',
-                'description': 'Master Django framework by building real-world web applications. Topics include models, views, templates, forms, authentication, and deployment.',
+                'name': 'Desarrollo Web Avanzado con Django',
+                'description': 'Domina el framework Django construyendo aplicaciones web del mundo real. Los temas incluyen modelos, vistas, plantillas, formularios, autenticación y despliegue.',
                 'teacher': teachers[3]
             },
             {
-                'name': 'Calculus and Linear Algebra',
-                'description': 'Comprehensive course covering differential and integral calculus, along with matrix operations, vector spaces, and linear transformations.',
+                'name': 'Cálculo y Álgebra Lineal',
+                'description': 'Curso completo que cubre cálculo diferencial e integral, junto con operaciones de matrices, espacios vectoriales y transformaciones lineales.',
                 'teacher': teachers[1]
             },
             {
-                'name': 'Data Science with Python',
-                'description': 'Explore data analysis, visualization, and machine learning using Python libraries like pandas, matplotlib, and scikit-learn.',
+                'name': 'Ciencia de Datos con Python',
+                'description': 'Explora análisis de datos, visualización y aprendizaje automático usando librerías de Python como pandas, matplotlib y scikit-learn.',
                 'teacher': teachers[4]
             },
             {
-                'name': 'Quantum Physics Fundamentals',
-                'description': 'Introduction to quantum mechanics, wave-particle duality, the Schrödinger equation, and quantum entanglement.',
+                'name': 'Fundamentos de Física Cuántica',
+                'description': 'Introducción a la mecánica cuántica, dualidad onda-partícula, ecuación de Schrödinger y entrelazamiento cuántico.',
                 'teacher': teachers[2]
             },
             {
-                'name': 'Machine Learning Algorithms',
-                'description': 'Deep dive into supervised and unsupervised learning algorithms, neural networks, and practical applications of AI.',
+                'name': 'Algoritmos de Aprendizaje Automático',
+                'description': 'Profundiza en algoritmos de aprendizaje supervisado y no supervisado, redes neuronales y aplicaciones prácticas de IA.',
                 'teacher': teachers[4]
             },
             {
-                'name': 'Web Design with HTML, CSS, and JavaScript',
-                'description': 'Create beautiful and responsive websites using modern web technologies. Includes hands-on projects and best practices.',
+                'name': 'Diseño Web con HTML, CSS y JavaScript',
+                'description': 'Crea sitios web hermosos y responsivos usando tecnologías web modernas. Incluye proyectos prácticos y mejores prácticas.',
                 'teacher': teachers[3]
             },
             {
-                'name': 'Discrete Mathematics',
-                'description': 'Study logic, set theory, graph theory, combinatorics, and their applications in computer science.',
+                'name': 'Matemáticas Discretas',
+                'description': 'Estudia lógica, teoría de conjuntos, teoría de grafos, combinatoria y sus aplicaciones en ciencias de la computación.',
                 'teacher': teachers[1]
+            },
+            {
+                'name': 'Bases de Datos Relacionales',
+                'description': 'Aprende diseño de bases de datos, SQL, normalización y optimización de consultas. Incluye proyectos con PostgreSQL y MySQL.',
+                'teacher': teachers[0]
+            },
+            {
+                'name': 'Inteligencia Artificial Aplicada',
+                'description': 'Descubre aplicaciones prácticas de IA en visión por computadora, procesamiento de lenguaje natural y sistemas de recomendación.',
+                'teacher': teachers[4]
             },
         ]
 
         for course_data in courses_data:
-            course, created = Course.objects.get_or_create(
+            course = Course.objects.create(
                 name=course_data['name'],
-                defaults={
-                    'description': course_data['description'],
-                    'teacher': course_data['teacher']
-                }
+                description=course_data['description'],
+                teacher=course_data['teacher']
             )
-            if created:
-                self.stdout.write(self.style.SUCCESS(f'Created course: {course.name}'))
+            self.stdout.write(self.style.SUCCESS(f'Curso creado: {course.name}'))
 
-        self.stdout.write(self.style.SUCCESS('Sample data created successfully!'))
-        self.stdout.write(f'Total teachers: {Teacher.objects.count()}')
-        self.stdout.write(f'Total courses: {Course.objects.count()}')
+        self.stdout.write(self.style.SUCCESS('¡Datos de ejemplo creados exitosamente!'))
+        self.stdout.write(f'Total de profesores: {Teacher.objects.count()}')
+        self.stdout.write(f'Total de cursos: {Course.objects.count()}')

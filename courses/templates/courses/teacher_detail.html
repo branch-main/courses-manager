@@ -6,6 +6,15 @@
 <div class="row">
     <div class="col-md-8">
         <h1>{{ teacher.name }}</h1>
+        
+        {% if teacher.image %}
+            <img src="{{ teacher.image.url }}" alt="{{ teacher.name }}" class="course-image img-fluid rounded mb-4">
+        {% else %}
+            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded mb-4" style="height: 300px;">
+                <span>No Image Available</span>
+            </div>
+        {% endif %}
+        
         <div class="card mb-4">
             <div class="card-body">
                 <h5 class="card-title">Details</h5>

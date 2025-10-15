@@ -10,6 +10,9 @@
             <div class="card-body">
                 <div class="alert alert-danger">
                     <h5>Are you sure you want to delete this teacher?</h5>
+                    {% if object.image %}
+                        <img src="{{ object.image.url }}" alt="{{ object.name }}" class="img-thumbnail mb-3" style="max-width: 200px;">
+                    {% endif %}
                     <p><strong>Name:</strong> {{ object.name }}</p>
                     <p><strong>Speciality:</strong> {{ object.speciality }}</p>
                     {% if object.courses.count > 0 %}

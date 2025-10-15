@@ -13,6 +13,13 @@
         {% for teacher in teachers %}
             <div class="col-md-6 col-lg-4 mb-4">
                 <div class="card h-100">
+                    {% if teacher.image %}
+                        <img src="{{ teacher.image.url }}" class="card-img-top" alt="{{ teacher.name }}">
+                    {% else %}
+                        <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <span class="text-white">No Image</span>
+                        </div>
+                    {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ teacher.name }}</h5>
                         <p class="card-text">
