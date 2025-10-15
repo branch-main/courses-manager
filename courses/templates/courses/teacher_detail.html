@@ -1,0 +1,59 @@
+{% extends 'courses/base.html' %}
+
+{% block title %}{{ teacher.name }} - Teacher Detail{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h1>{{ teacher.name }}</h1>
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Details</h5>
+                <p><strong>Name:</strong> {{ teacher.name }}</p>
+                <p><strong>Speciality:</strong> {{ teacher.speciality }}</p>
+            </div>
+        </div>
+
+        <h3>Courses</h3>
+        {% if teacher.courses.all %}
+            <div class="row">
+                {% for course in teacher.courses.all %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            {% if course.image %}
+                                <img src="{{ course.image.url }}" class="card-img-top" alt="{{ course.name }}">
+                            {% else %}
+                                <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                                    <span class="text-white">No Image</span>
+                                </div>
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ course.name }}</h5>
+                                <p class="card-text">{{ course.description|truncatewords:15 }}</p>
+                                <a href="{% url 'course_detail' course.pk %}" class="btn btn-sm btn-primary">View Course</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                This teacher has no courses yet.
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Actions</h5>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'teacher_update' teacher.pk %}" class="btn btn-warning">Edit Teacher</a>
+                    <a href="{% url 'teacher_delete' teacher.pk %}" class="btn btn-danger">Delete Teacher</a>
+                    <a href="{% url 'teacher_list' %}" class="btn btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

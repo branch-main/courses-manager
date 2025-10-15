@@ -1,0 +1,52 @@
+{% extends 'courses/base.html' %}
+
+{% block title %}{{ course.name }} - Course Detail{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h1>{{ course.name }}</h1>
+        
+        {% if course.image %}
+            <img src="{{ course.image.url }}" alt="{{ course.name }}" class="course-image img-fluid rounded mb-4">
+        {% else %}
+            <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded mb-4" style="height: 300px;">
+                <span>No Image Available</span>
+            </div>
+        {% endif %}
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Course Details</h5>
+                <p><strong>Name:</strong> {{ course.name }}</p>
+                <p><strong>Description:</strong></p>
+                <p>{{ course.description }}</p>
+                <p><strong>Teacher:</strong> <a href="{% url 'teacher_detail' course.teacher.pk %}">{{ course.teacher.name }}</a></p>
+                <p><strong>Teacher Speciality:</strong> {{ course.teacher.speciality }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Actions</h5>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'course_update' course.pk %}" class="btn btn-warning">Edit Course</a>
+                    <a href="{% url 'course_delete' course.pk %}" class="btn btn-danger">Delete Course</a>
+                    <a href="{% url 'course_list' %}" class="btn btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">Teacher Info</h5>
+                <p><strong>{{ course.teacher.name }}</strong></p>
+                <p>{{ course.teacher.speciality }}</p>
+                <a href="{% url 'teacher_detail' course.teacher.pk %}" class="btn btn-sm btn-info">View Teacher</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

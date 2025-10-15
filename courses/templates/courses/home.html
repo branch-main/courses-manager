@@ -1,0 +1,39 @@
+{% extends 'courses/base.html' %}
+
+{% block title %}Home - Courses Management{% endblock %}
+
+{% block content %}
+<div class="jumbotron bg-light p-5 rounded">
+    <h1 class="display-4">Welcome to Courses Management System</h1>
+    <p class="lead">Manage your courses and teachers efficiently.</p>
+    <hr class="my-4">
+    <p>Start by exploring our courses or managing teachers.</p>
+    <div class="d-flex gap-3">
+        <a class="btn btn-primary btn-lg" href="{% url 'course_list' %}" role="button">View Courses</a>
+        <a class="btn btn-success btn-lg" href="{% url 'teacher_list' %}" role="button">View Teachers</a>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Courses</h5>
+                <p class="card-text">Browse, create, and manage courses with detailed information and images.</p>
+                <a href="{% url 'course_list' %}" class="btn btn-primary">Go to Courses</a>
+                <a href="{% url 'course_create' %}" class="btn btn-outline-primary">Add New Course</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Teachers</h5>
+                <p class="card-text">Manage teachers and their specialties for better course organization.</p>
+                <a href="{% url 'teacher_list' %}" class="btn btn-success">Go to Teachers</a>
+                <a href="{% url 'teacher_create' %}" class="btn btn-outline-success">Add New Teacher</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

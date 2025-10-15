@@ -1,0 +1,67 @@
+{% extends 'courses/base.html' %}
+
+{% block title %}Teachers List{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Teachers</h1>
+    <a href="{% url 'teacher_create' %}" class="btn btn-success">Add New Teacher</a>
+</div>
+
+{% if teachers %}
+    <div class="row">
+        {% for teacher in teachers %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ teacher.name }}</h5>
+                        <p class="card-text">
+                            <strong>Speciality:</strong> {{ teacher.speciality }}
+                        </p>
+                        <p class="card-text">
+                            <small class="text-muted">Courses: {{ teacher.courses.count }}</small>
+                        </p>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'teacher_detail' teacher.pk %}" class="btn btn-sm btn-primary">View</a>
+                            <a href="{% url 'teacher_update' teacher.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{% url 'teacher_delete' teacher.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                {% endif %}
+
+                <li class="page-item active">
+                    <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+{% else %}
+    <div class="alert alert-info">
+        <p class="mb-0">No teachers found. <a href="{% url 'teacher_create' %}">Add the first teacher</a></p>
+    </div>
+{% endif %}
+{% endblock %}
