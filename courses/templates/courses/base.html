@@ -89,6 +89,13 @@
             box-shadow: var(--card-shadow);
             transition: all 0.3s ease;
             overflow: hidden;
+        }
+
+        .card.sticky-top {
+            height: auto;
+        }
+
+        .row > div > .card:not(.sticky-top) {
             height: 100%;
         }
 
@@ -109,6 +116,8 @@
 
         .card-body {
             padding: 1.5rem;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
         }
 
         .card-title {
@@ -116,11 +125,15 @@
             font-size: 1.25rem;
             margin-bottom: 1rem;
             color: #1e293b;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
         }
 
         .card-text {
             color: #64748b;
             line-height: 1.6;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
         }
 
         /* Image Placeholder */
