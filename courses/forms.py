@@ -4,11 +4,10 @@ from .models import Teacher, Course
 class TeacherForm(forms.ModelForm):
     class Meta:
         model = Teacher
-        fields = ['name', 'speciality', 'image']
+        fields = ['name', 'speciality']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'speciality': forms.TextInput(attrs={'class': 'form-control'}),
-            'image': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
 class CourseForm(forms.ModelForm):

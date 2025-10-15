@@ -17,14 +17,6 @@
                 
                 <h1 class="mb-4">{{ teacher.name }}</h1>
                 
-                {% if teacher.image %}
-                    <img src="{{ teacher.image.url }}" alt="{{ teacher.name }}" class="teacher-image img-fluid mb-4">
-                {% else %}
-                    <div class="image-placeholder mb-4" style="height: 400px; border-radius: 12px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-                        <i class="bi bi-person"></i>
-                    </div>
-                {% endif %}
-
                 <h3 class="mb-3"><i class="bi bi-book-half text-primary me-2"></i>Cursos Asignados</h3>
                 {% if teacher.courses.all %}
                     <div class="row g-3">

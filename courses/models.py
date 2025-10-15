@@ -4,7 +4,6 @@ from django.urls import reverse
 class Teacher(models.Model):
     name = models.CharField(max_length=200)
     speciality = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='teachers/', blank=True, null=True)
     
     def __str__(self):
         return self.name

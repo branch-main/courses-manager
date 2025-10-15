@@ -18,13 +18,6 @@
         {% for teacher in teachers %}
             <div class="col-md-6 col-lg-4">
                 <div class="card">
-                    {% if teacher.image %}
-                        <img src="{{ teacher.image.url }}" class="card-img-top" alt="{{ teacher.name }}">
-                    {% else %}
-                        <div class="image-placeholder" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
-                            <i class="bi bi-person"></i>
-                        </div>
-                    {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ teacher.name }}</h5>
                         <div class="d-flex align-items-center mb-2">

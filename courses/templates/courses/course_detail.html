@@ -45,13 +45,6 @@
                     <h6 class="text-muted mb-3">
                         <i class="bi bi-person-fill text-success me-2"></i>Profesor
                     </h6>
-                    {% if course.teacher.image %}
-                        <div class="text-center mb-3">
-                            <img src="{{ course.teacher.image.url }}" alt="{{ course.teacher.name }}" 
-                                 class="img-fluid rounded" 
-                                 style="max-height: 150px; object-fit: cover; width: 100%;">
-                        </div>
-                    {% endif %}
                     <p class="mb-1"><strong class="text-break">{{ course.teacher.name }}</strong></p>
                     <p class="text-muted mb-2 text-break small">{{ course.teacher.speciality }}</p>
                     <a href="{% url 'teacher_detail' course.teacher.pk %}" class="btn btn-sm btn-outline-success w-100">

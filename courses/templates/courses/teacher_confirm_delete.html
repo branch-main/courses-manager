@@ -17,11 +17,6 @@
                         <i class="bi bi-question-circle me-2"></i>¿Estás seguro de eliminar este profesor?
                     </h5>
                     <hr>
-                    {% if object.image %}
-                        <div class="text-center mb-3">
-                            <img src="{{ object.image.url }}" alt="{{ object.name }}" class="img-thumbnail" style="max-width: 250px; border-radius: 8px;">
-                        </div>
-                    {% endif %}
                     <p class="mb-1"><strong>Nombre:</strong> {{ object.name }}</p>
                     <p class="mb-3"><strong>Especialidad:</strong> {{ object.speciality }}</p>
                     {% if object.courses.count > 0 %}
