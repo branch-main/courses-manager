@@ -34,6 +34,27 @@ if os.environ.get('RENDER_EXTERNAL_HOSTNAME'):
     ALLOWED_HOSTS.append(os.environ.get('RENDER_EXTERNAL_HOSTNAME'))
 
 
+# Cloudinary Configuration for Media Files
+# If Cloudinary credentials are provided, use Cloudinary. Otherwise, use local storage.
+USE_CLOUDINARY = all([
+    os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    os.environ.get('CLOUDINARY_API_KEY'),
+    os.environ.get('CLOUDINARY_API_SECRET'),
+])
+
+if USE_CLOUDINARY:
+    import cloudinary
+    import cloudinary.uploader
+    import cloudinary.api
+    
+    cloudinary.config(
+        cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
+        api_key=os.environ.get('CLOUDINARY_API_KEY'),
+        api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
+        secure=True
+    )
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,6 +64,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'courses',
 ]
 
@@ -133,18 +156,21 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Serve media files with WhiteNoise in production
-# Note: Files are ephemeral on Render and will be lost on restart
-# For persistent storage, use Cloudinary or S3 (see CLOUDINARY_SETUP.md)
-WHITENOISE_AUTOREFRESH = True
-WHITENOISE_USE_FINDERS = True
-WHITENOISE_MIMETYPES = {
-    '.jpg': 'image/jpeg',
-    '.jpeg': 'image/jpeg',
-    '.png': 'image/png',
-    '.gif': 'image/gif',
-    '.webp': 'image/webp',
-}
+# Use Cloudinary for media storage if configured, otherwise use local filesystem
+if USE_CLOUDINARY:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+else:
+    # Local storage (for development or when Cloudinary is not configured)
+    # Note: Files are ephemeral on Render and will be lost on restart
+    WHITENOISE_AUTOREFRESH = True
+    WHITENOISE_USE_FINDERS = True
+    WHITENOISE_MIMETYPES = {
+        '.jpg': 'image/jpeg',
+        '.jpeg': 'image/jpeg',
+        '.png': 'image/png',
+        '.gif': 'image/gif',
+        '.webp': 'image/webp',
+    }
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
