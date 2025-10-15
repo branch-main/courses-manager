@@ -1,39 +1,104 @@
 {% extends 'courses/base.html' %}
 
-{% block title %}Home - Courses Management{% endblock %}
+{% block title %}Inicio - Sistema de Gestión de Cursos{% endblock %}
 
 {% block content %}
-<div class="jumbotron bg-light p-5 rounded">
-    <h1 class="display-4">Welcome to Courses Management System</h1>
-    <p class="lead">Manage your courses and teachers efficiently.</p>
-    <hr class="my-4">
-    <p>Start by exploring our courses or managing teachers.</p>
-    <div class="d-flex gap-3">
-        <a class="btn btn-primary btn-lg" href="{% url 'course_list' %}" role="button">View Courses</a>
-        <a class="btn btn-success btn-lg" href="{% url 'teacher_list' %}" role="button">View Teachers</a>
+<div class="hero-section">
+    <div class="text-center">
+        <i class="bi bi-mortarboard-fill" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+        <h1>Bienvenido al Sistema de Gestión de Cursos</h1>
+        <p class="lead">Administra cursos y profesores de manera eficiente y profesional</p>
+        <div class="d-flex gap-3 justify-content-center mt-4">
+            <a class="btn btn-light btn-lg" href="{% url 'course_list' %}">
+                <i class="bi bi-book-fill me-2"></i>Ver Cursos
+            </a>
+            <a class="btn btn-outline-light btn-lg" href="{% url 'teacher_list' %}">
+                <i class="bi bi-person-fill me-2"></i>Ver Profesores
+            </a>
+        </div>
     </div>
 </div>
 
-<div class="row mt-5">
+<div class="row g-4 mb-5">
+    <div class="col-md-3">
+        <div class="stat-card text-center">
+            <i class="bi bi-book-fill text-primary"></i>
+            <h3 class="mb-1">Cursos</h3>
+            <p class="text-muted mb-0">Gestiona tu catálogo de cursos</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card text-center">
+            <i class="bi bi-person-fill text-success"></i>
+            <h3 class="mb-1">Profesores</h3>
+            <p class="text-muted mb-0">Administra el equipo docente</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card text-center">
+            <i class="bi bi-images text-warning"></i>
+            <h3 class="mb-1">Multimedia</h3>
+            <p class="text-muted mb-0">Imágenes y recursos</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card text-center">
+            <i class="bi bi-graph-up text-info"></i>
+            <h3 class="mb-1">Reportes</h3>
+            <p class="text-muted mb-0">Estadísticas y análisis</p>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
     <div class="col-md-6">
-        <div class="card">
+        <div class="card h-100">
             <div class="card-body">
-                <h5 class="card-title">Courses</h5>
-                <p class="card-text">Browse, create, and manage courses with detailed information and images.</p>
-                <a href="{% url 'course_list' %}" class="btn btn-primary">Go to Courses</a>
-                <a href="{% url 'course_create' %}" class="btn btn-outline-primary">Add New Course</a>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-primary bg-opacity-10 p-3 rounded-3 me-3">
+                        <i class="bi bi-book-fill text-primary" style="font-size: 2rem;"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-1">Gestión de Cursos</h5>
+                        <p class="text-muted mb-0">Completo sistema CRUD</p>
+                    </div>
+                </div>
+                <p class="card-text">Explora, crea y gestiona cursos con información detallada, imágenes y asignación de profesores.</p>
+                <div class="d-flex gap-2 mt-3">
+                    <a href="{% url 'course_list' %}" class="btn btn-primary">
+                        <i class="bi bi-list-ul me-1"></i>Ver Cursos
+                    </a>
+                    <a href="{% url 'course_create' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-plus-circle me-1"></i>Nuevo Curso
+                    </a>
+                </div>
             </div>
         </div>
     </div>
     <div class="col-md-6">
-        <div class="card">
+        <div class="card h-100">
             <div class="card-body">
-                <h5 class="card-title">Teachers</h5>
-                <p class="card-text">Manage teachers and their specialties for better course organization.</p>
-                <a href="{% url 'teacher_list' %}" class="btn btn-success">Go to Teachers</a>
-                <a href="{% url 'teacher_create' %}" class="btn btn-outline-success">Add New Teacher</a>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-success bg-opacity-10 p-3 rounded-3 me-3">
+                        <i class="bi bi-person-fill text-success" style="font-size: 2rem;"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-1">Gestión de Profesores</h5>
+                        <p class="text-muted mb-0">Control del equipo docente</p>
+                    </div>
+                </div>
+                <p class="card-text">Administra profesores con sus especialidades, fotografías y visualiza todos sus cursos asignados.</p>
+                <div class="d-flex gap-2 mt-3">
+                    <a href="{% url 'teacher_list' %}" class="btn btn-success">
+                        <i class="bi bi-list-ul me-1"></i>Ver Profesores
+                    </a>
+                    <a href="{% url 'teacher_create' %}" class="btn btn-outline-success">
+                        <i class="bi bi-plus-circle me-1"></i>Nuevo Profesor
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock %}

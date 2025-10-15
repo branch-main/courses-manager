@@ -1,37 +1,50 @@
 {% extends 'courses/base.html' %}
 
-{% block title %}Teachers List{% endblock %}
+{% block title %}Lista de Profesores{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Teachers</h1>
-    <a href="{% url 'teacher_create' %}" class="btn btn-success">Add New Teacher</a>
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1><i class="bi bi-person-fill text-success me-2"></i>Profesores</h1>
+        <p class="text-muted mb-0">Gestiona el equipo docente</p>
+    </div>
+    <a href="{% url 'teacher_create' %}" class="btn btn-success">
+        <i class="bi bi-plus-circle me-1"></i>Nuevo Profesor
+    </a>
 </div>
 
 {% if teachers %}
-    <div class="row">
+    <div class="row g-4">
         {% for teacher in teachers %}
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100">
+            <div class="col-md-6 col-lg-4">
+                <div class="card">
                     {% if teacher.image %}
                         <img src="{{ teacher.image.url }}" class="card-img-top" alt="{{ teacher.name }}">
                     {% else %}
-                        <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
-                            <span class="text-white">No Image</span>
+                        <div class="image-placeholder" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                            <i class="bi bi-person"></i>
                         </div>
                     {% endif %}
                     <div class="card-body">
                         <h5 class="card-title">{{ teacher.name }}</h5>
-                        <p class="card-text">
-                            <strong>Speciality:</strong> {{ teacher.speciality }}
-                        </p>
-                        <p class="card-text">
-                            <small class="text-muted">Courses: {{ teacher.courses.count }}</small>
-                        </p>
-                        <div class="d-flex gap-2">
-                            <a href="{% url 'teacher_detail' teacher.pk %}" class="btn btn-sm btn-primary">View</a>
-                            <a href="{% url 'teacher_update' teacher.pk %}" class="btn btn-sm btn-warning">Edit</a>
-                            <a href="{% url 'teacher_delete' teacher.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-star-fill text-warning me-2"></i>
+                            <span class="text-muted">{{ teacher.speciality }}</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-book text-muted me-2"></i>
+                            <span class="badge bg-primary">{{ teacher.courses.count }} curso{{ teacher.courses.count|pluralize }}</span>
+                        </div>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a href="{% url 'teacher_detail' teacher.pk %}" class="btn btn-sm btn-primary">
+                                <i class="bi bi-eye me-1"></i>Ver
+                            </a>
+                            <a href="{% url 'teacher_update' teacher.pk %}" class="btn btn-sm btn-warning">
+                                <i class="bi bi-pencil me-1"></i>Editar
+                            </a>
+                            <a href="{% url 'teacher_delete' teacher.pk %}" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash me-1"></i>Eliminar
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -40,35 +53,48 @@
     </div>
 
     {% if is_paginated %}
-        <nav aria-label="Page navigation">
+        <nav aria-label="Navegación de páginas" class="mt-5">
             <ul class="pagination justify-content-center">
                 {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="?page=1">First</a>
+                        <a class="page-link" href="?page=1">
+                            <i class="bi bi-chevron-double-left"></i>
+                        </a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                            <i class="bi bi-chevron-left"></i>
+                        </a>
                     </li>
                 {% endif %}
 
                 <li class="page-item active">
-                    <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                    <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
                 </li>
 
                 {% if page_obj.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+                            <i class="bi bi-chevron-double-right"></i>
+                        </a>
                     </li>
                 {% endif %}
             </ul>
         </nav>
     {% endif %}
 {% else %}
-    <div class="alert alert-info">
-        <p class="mb-0">No teachers found. <a href="{% url 'teacher_create' %}">Add the first teacher</a></p>
+    <div class="text-center py-5">
+        <i class="bi bi-person-x" style="font-size: 4rem; color: #cbd5e1;"></i>
+        <h3 class="mt-3 text-muted">No hay profesores disponibles</h3>
+        <p class="text-muted">Comienza agregando tu primer profesor</p>
+        <a href="{% url 'teacher_create' %}" class="btn btn-success mt-2">
+            <i class="bi bi-plus-circle me-1"></i>Crear Primer Profesor
+        </a>
     </div>
 {% endif %}
 {% endblock %}

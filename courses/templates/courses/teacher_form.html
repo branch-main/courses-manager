@@ -1,49 +1,83 @@
 {% extends 'courses/base.html' %}
 
-{% block title %}{% if object %}Edit{% else %}Create{% endif %} Teacher{% endblock %}
+{% block title %}{% if object %}Editar{% else %}Crear{% endif %} Profesor{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-6">
-        <h1>{% if object %}Edit{% else %}Create{% endif %} Teacher</h1>
+    <div class="col-lg-6">
         <div class="card">
             <div class="card-body">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'teacher_list' %}">Profesores</a></li>
+                        <li class="breadcrumb-item active">{% if object %}Editar{% else %}Crear{% endif %}</li>
+                    </ol>
+                </nav>
+                
+                <h1 class="mb-4">
+                    <i class="bi bi-{% if object %}pencil{% else %}plus-circle{% endif %} text-success me-2"></i>
+                    {% if object %}Editar{% else %}Crear Nuevo{% endif %} Profesor
+                </h1>
+                
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     
-                    <div class="mb-3">
-                        <label for="{{ form.name.id_for_label }}" class="form-label">Name</label>
+                    <div class="mb-4">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">
+                            <i class="bi bi-person me-1"></i>Nombre Completo
+                        </label>
                         {{ form.name }}
                         {% if form.name.errors %}
-                            <div class="text-danger">{{ form.name.errors }}</div>
+                            <div class="text-danger mt-1">
+                                <i class="bi bi-exclamation-circle me-1"></i>
+                                {{ form.name.errors }}
+                            </div>
                         {% endif %}
+                        <small class="text-muted">Ingresa el nombre completo del profesor</small>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="{{ form.speciality.id_for_label }}" class="form-label">Speciality</label>
+                    <div class="mb-4">
+                        <label for="{{ form.speciality.id_for_label }}" class="form-label">
+                            <i class="bi bi-star me-1"></i>Especialidad
+                        </label>
                         {{ form.speciality }}
                         {% if form.speciality.errors %}
-                            <div class="text-danger">{{ form.speciality.errors }}</div>
+                            <div class="text-danger mt-1">
+                                <i class="bi bi-exclamation-circle me-1"></i>
+                                {{ form.speciality.errors }}
+                            </div>
                         {% endif %}
+                        <small class="text-muted">Área de especialización del profesor</small>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="{{ form.image.id_for_label }}" class="form-label">Teacher Image</label>
+                    <div class="mb-4">
+                        <label for="{{ form.image.id_for_label }}" class="form-label">
+                            <i class="bi bi-camera me-1"></i>Fotografía del Profesor
+                        </label>
                         {{ form.image }}
                         {% if form.image.errors %}
-                            <div class="text-danger">{{ form.image.errors }}</div>
+                            <div class="text-danger mt-1">
+                                <i class="bi bi-exclamation-circle me-1"></i>
+                                {{ form.image.errors }}
+                            </div>
                         {% endif %}
+                        <small class="text-muted">Sube una foto del profesor (opcional)</small>
                         {% if object.image %}
-                            <div class="mt-2">
-                                <p>Current image:</p>
-                                <img src="{{ object.image.url }}" alt="{{ object.name }}" class="img-thumbnail" style="max-width: 200px;">
+                            <div class="mt-3">
+                                <p class="mb-2"><strong>Fotografía actual:</strong></p>
+                                <img src="{{ object.image.url }}" alt="{{ object.name }}" class="img-thumbnail" style="max-width: 250px; border-radius: 8px;">
                             </div>
                         {% endif %}
                     </div>
 
                     <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-primary">Save</button>
-                        <a href="{% url 'teacher_list' %}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle me-1"></i>Guardar Profesor
+                        </button>
+                        <a href="{% url 'teacher_list' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-1"></i>Cancelar
+                        </a>
                     </div>
                 </form>
             </div>
