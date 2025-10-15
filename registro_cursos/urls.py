@@ -24,5 +24,6 @@ urlpatterns = [
     path('', include('courses.urls')),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Serve media files in all environments
+# For production with persistent storage, consider using Cloudinary or S3
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
